@@ -1,0 +1,31 @@
+.card {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+label {
+  width: max-content;
+  color: salmon;
+  font-size: 0.8rem;
+  border-bottom: 0.5px solid salmon;
+  margin: 4px 0;
+}
+
+.review {
+  font-size: 0.9rem;
+}
+
+.star {
+  color: gold;
+}
+
+.username {
+  font-size: 0.9rem;
+}
+
+.date {
+  font-size: 0.8rem;
+}

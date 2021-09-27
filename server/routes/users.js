@@ -27,8 +27,12 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     !user && res.status(400).json("Doesn't exist");
 
-    const validPassord = await bcrypt.compare(req.body.password, user.password);
-    !validPassord && res.status(400).json("password doesn't correct");
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+
+    !validPassword && res.status(400).json("password doesn't correct");
     res.status(200).json({ id: user._id, username: user.username });
   } catch (err) {
     res.status(500).json(err);
