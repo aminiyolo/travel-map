@@ -8,13 +8,14 @@ import { format } from "timeago.js";
 import "./app.css";
 
 function App() {
+  const myStorage = window.localStorage;
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
   const titleRef = useRef(null);
   const reviewRef = useRef(null);
   const ratingRef = useRef(null);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(myStorage.getItem("user"));
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [viewport, setViewport] = useState({
@@ -75,6 +76,25 @@ function App() {
     setShowRegister(false);
   };
 
+  const closeLogin = () => {
+    setShowLogin(false);
+  };
+
+  const onClickLogin = () => {
+    setShowRegister(false);
+    setShowLogin(true);
+  };
+
+  const onClickRegister = () => {
+    setShowLogin(false);
+    setShowRegister(true);
+  };
+
+  const handleLogout = () => {
+    myStorage.removeItem("user");
+    setCurrentUser(null);
+  };
+
   return (
     <div className="App">
       <ReactMapGL
@@ -96,7 +116,10 @@ function App() {
               <Room
                 style={{
                   fontSize: viewport.zoom * 7,
-                  color: "palevioletred",
+                  color:
+                    currentUser === pin.username
+                      ? "darkgreen"
+                      : "palevioletred",
                   cursor: "pointer",
                 }}
                 onClick={() =>
@@ -120,12 +143,7 @@ function App() {
                   <p className="review">{pin.description}</p>
                   <label>Rating</label>
                   <div className="rating">
-                    {
-                      Array(pin.rating).fill(<Star className="star" />)
-                      // .map(() => (
-                      //   <Star className="star" key={pin._id} />
-                      // ))
-                    }
+                    {Array(pin.rating).fill(<Star className="star" />)}
                   </div>
                   <label>Info</label>
                   <span className="username">
@@ -168,22 +186,30 @@ function App() {
           </Popup>
         )}
         {currentUser ? (
-          <button className="button logout">Logout</button>
+          <button className="button logout" onClick={handleLogout}>
+            Logout
+          </button>
         ) : (
           <div className="buttons__container">
-            <button className="button login" onClick={() => setShowLogin(true)}>
+            <button className="button login" onClick={onClickLogin}>
               Login
             </button>
-            <button
-              className="button register"
-              onClick={() => setShowRegister(true)}
-            >
+            <button className="button register" onClick={onClickRegister}>
               Register
             </button>
           </div>
         )}
-        {showRegister && <Register closeRegister={closeRegister} />}
-        {showLogin && <Login setShowLogin={setShowLogin} />}
+        {showRegister && (
+          <Register closeRegister={closeRegister} closeLogin={closeLogin} />
+        )}
+        {showLogin && (
+          <Login
+            closeLogin={closeLogin}
+            closeRegister={closeRegister}
+            myStorage={myStorage}
+            setCurrentUser={setCurrentUser}
+          />
+        )}
       </ReactMapGL>
     </div>
   );

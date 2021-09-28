@@ -71,7 +71,8 @@ textarea::placeholder {
 }
 
 .login {
-  background-color: greenyellow;
+  background-color: darkcyan;
+  margin-right: 0.8rem;
 }
 
 .register {

@@ -1,0 +1,47 @@
+.login__container {
+  width: 19rem;
+  height: 13rem;
+  padding: 1.2rem;
+  border-radius: 0.8rem;
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  color: salmon;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.login__button {
+  border: none;
+  padding: 0.3rem;
+  border-radius: 0.4rem;
+  color: white;
+  background-color: salmon;
+  cursor: pointer;
+}
+
+.failure {
+  color: red;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.cancle {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  cursor: pointer;
+}
